@@ -10,3 +10,8 @@ Day 1:
 - Converted TotalCharges from object to numeric
 - Identified and removed 11 missing values
 - Applied binary encoding to gender column
+03/04/2026
+- Removed customerID column as it is not useful for prediction
+- Applied one-hot encoding to categorical variables
+- Converted all features into numeric format for ML models
+- Final dataset shape: (7032, 31)
