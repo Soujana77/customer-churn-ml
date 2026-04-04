@@ -19,3 +19,6 @@ Day 1:
 - Separated features (X) and target (y)
 - Performed train-test split (80% training, 20% testing)
 - Used random_state=42 for consistent results
+- Used correlation to analyze feature importance
+- Found top features affecting churn (tenure, contract, charges, internet service)
+- Decided to keep all features for model training
