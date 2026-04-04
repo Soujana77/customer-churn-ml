@@ -22,3 +22,7 @@ Day 1:
 - Used correlation to analyze feature importance
 - Found top features affecting churn (tenure, contract, charges, internet service)
 - Decided to keep all features for model training
+Task-4
+- Structured ML pipeline (clean → split → scale → train)
+- Applied StandardScaler to normalize features
+- Trained Logistic Regression model successfully
