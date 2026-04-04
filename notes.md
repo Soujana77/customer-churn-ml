@@ -15,3 +15,7 @@ Day 1:
 - Applied one-hot encoding to categorical variables
 - Converted all features into numeric format for ML models
 - Final dataset shape: (7032, 31)
+04/04/2026
+- Separated features (X) and target (y)
+- Performed train-test split (80% training, 20% testing)
+- Used random_state=42 for consistent results
