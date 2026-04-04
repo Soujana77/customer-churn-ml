@@ -58,3 +58,21 @@ model = LogisticRegression(max_iter=1000)
 model.fit(X_train, y_train)
 
 print("Model training completed successfully")
+
+# ======================
+# 7. Predictions
+# ======================
+y_pred = model.predict(X_test)
+
+# ======================
+# 8. Evaluation
+# ======================
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
+
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("Precision:", precision_score(y_test, y_pred))
+print("Recall:", recall_score(y_test, y_pred))
+print("F1 Score:", f1_score(y_test, y_pred))
+
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, y_pred))

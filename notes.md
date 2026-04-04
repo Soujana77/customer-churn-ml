@@ -26,3 +26,7 @@ Task-4
 - Structured ML pipeline (clean → split → scale → train)
 - Applied StandardScaler to normalize features
 - Trained Logistic Regression model successfully
+Task 5 and 6
+- Generated predictions using trained model
+- Evaluated model using accuracy, precision, recall, and F1-score
+- Analyzed confusion matrix to understand model performance
