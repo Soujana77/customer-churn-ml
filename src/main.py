@@ -96,3 +96,21 @@ print("Accuracy:", accuracy_score(y_test, y_pred_rf))
 print("Precision:", precision_score(y_test, y_pred_rf))
 print("Recall:", recall_score(y_test, y_pred_rf))
 print("F1 Score:", f1_score(y_test, y_pred_rf))
+
+# ======================
+# Logistic Regression (Balanced)
+# ======================
+from sklearn.linear_model import LogisticRegression
+
+model_balanced = LogisticRegression(max_iter=1000, class_weight='balanced')
+model_balanced.fit(X_train, y_train)
+
+y_pred_balanced = model_balanced.predict(X_test)
+
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
+print("\n--- Logistic Regression (Balanced) ---")
+print("Accuracy:", accuracy_score(y_test, y_pred_balanced))
+print("Precision:", precision_score(y_test, y_pred_balanced))
+print("Recall:", recall_score(y_test, y_pred_balanced))
+print("F1 Score:", f1_score(y_test, y_pred_balanced))

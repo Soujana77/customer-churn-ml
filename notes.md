@@ -34,3 +34,13 @@ Task 5 and 6
 - Achieved ~78% accuracy using Logistic Regression
 - Observed lower recall (~51%) meaning many churn cases missed
 - Identified need to improve recall for better business impact
+05/04/2026
+- Implemented Logistic Regression as baseline model
+- Evaluated model using accuracy, precision, recall, F1-score
+- Implemented Random Forest for comparison
+- Observed Random Forest did not improve recall
+- Identified need to handle class imbalance
+-----------------
+- Applied class_weight='balanced' to handle class imbalance
+- Improved model performance (higher recall and F1-score)
+- Selected balanced Logistic Regression as final model
