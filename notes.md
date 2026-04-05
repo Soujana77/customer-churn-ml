@@ -30,3 +30,7 @@ Task 5 and 6
 - Generated predictions using trained model
 - Evaluated model using accuracy, precision, recall, and F1-score
 - Analyzed confusion matrix to understand model performance
+--------
+- Achieved ~78% accuracy using Logistic Regression
+- Observed lower recall (~51%) meaning many churn cases missed
+- Identified need to improve recall for better business impact
