@@ -48,3 +48,8 @@ Task 5 and 6
 - Saved trained model using joblib
 - Saved scaler for consistent preprocessing during predictions
 - Model ready for deployment
+--------------------
+- Improved frontend UI using HTML and CSS
+- Added structured form inputs (tenure, monthly charges, contract, internet service)
+- Enhanced user experience with clean layout and styled components
+- Improved prediction output message formatting
