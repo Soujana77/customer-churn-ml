@@ -114,3 +114,13 @@ print("Accuracy:", accuracy_score(y_test, y_pred_balanced))
 print("Precision:", precision_score(y_test, y_pred_balanced))
 print("Recall:", recall_score(y_test, y_pred_balanced))
 print("F1 Score:", f1_score(y_test, y_pred_balanced))
+
+# ======================
+# 9. Save Model
+# ======================
+import joblib
+
+joblib.dump(model_balanced, 'model.pkl')
+joblib.dump(scaler, 'scaler.pkl')
+
+print("Model and scaler saved successfully")

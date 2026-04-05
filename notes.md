@@ -44,3 +44,7 @@ Task 5 and 6
 - Applied class_weight='balanced' to handle class imbalance
 - Improved model performance (higher recall and F1-score)
 - Selected balanced Logistic Regression as final model
+---------------------
+- Saved trained model using joblib
+- Saved scaler for consistent preprocessing during predictions
+- Model ready for deployment
