@@ -53,3 +53,8 @@ Task 5 and 6
 - Added structured form inputs (tenure, monthly charges, contract, internet service)
 - Enhanced user experience with clean layout and styled components
 - Improved prediction output message formatting
+06/04/2026
+- Fixed incorrect input handling in Flask app
+- Mapped user inputs to correct feature names
+- Ensured model receives proper structured input
+- Improved prediction reliability

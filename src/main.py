@@ -124,3 +124,5 @@ joblib.dump(model_balanced, 'model.pkl')
 joblib.dump(scaler, 'scaler.pkl')
 
 print("Model and scaler saved successfully")
+
+print(X.columns)
