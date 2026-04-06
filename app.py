@@ -9,21 +9,29 @@ app = Flask(__name__)
 model = joblib.load('model.pkl')
 scaler = joblib.load('scaler.pkl')
 
+
 @app.route('/')
 def home():
     return render_template('index.html')
 
+
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Get input values
-        tenure = float(request.form['tenure'])
-        monthly = float(request.form['monthly'])
-        contract = int(request.form['contract'])
-        internet = int(request.form['internet'])
+        # -------------------------
+        # SAFE INPUT HANDLING
+        # -------------------------
+        tenure = float(request.form.get('tenure', 0))
+        monthly = float(request.form.get('plan', 0))
+        contract = int(request.form.get('contract', 0))
+        internet = int(request.form.get('internet', 0))
 
-        # Create feature dictionary (same as training columns)
-        data = {col: 0 for col in [
+        print("FORM DATA:", request.form)  # debug
+
+        # -------------------------
+        # CREATE FEATURE STRUCTURE
+        # -------------------------
+        columns = [
             'gender','SeniorCitizen','tenure','MonthlyCharges','TotalCharges',
             'Partner_Yes','Dependents_Yes','PhoneService_Yes',
             'MultipleLines_No phone service','MultipleLines_Yes',
@@ -37,12 +45,16 @@ def predict():
             'Contract_One year','Contract_Two year','PaperlessBilling_Yes',
             'PaymentMethod_Credit card (automatic)',
             'PaymentMethod_Electronic check','PaymentMethod_Mailed check'
-        ]}
+        ]
 
-        # Fill important fields
+        data = {col: 0 for col in columns}
+
+        # -------------------------
+        # FILL IMPORTANT VALUES
+        # -------------------------
         data['tenure'] = tenure
         data['MonthlyCharges'] = monthly
-        data['TotalCharges'] = tenure * monthly  # approximation
+        data['TotalCharges'] = tenure * monthly
 
         # Contract encoding
         if contract == 1:
@@ -56,48 +68,69 @@ def predict():
         elif internet == 2:
             data['InternetService_No'] = 1
 
-        # Convert to DataFrame
         df_input = pd.DataFrame([data])
 
-        # Scale input
+        # -------------------------
+        # SCALE + PREDICT
+        # -------------------------
         final_features = scaler.transform(df_input)
-
-        # Prediction
         prediction = model.predict(final_features)
 
-        if prediction[0] == 1:
-            result = "⚠️ Customer is likely to churn"
-        else:
-            result = "✅ Customer is not likely to churn"
+        print("Prediction:", prediction[0])  # debug
 
         # -------------------------
-        # Rule-based explanation
+        # RESULT
+        # -------------------------
+        if prediction[0] == 1:
+            result = "⚠️ High Risk: Customer is likely to churn"
+        else:
+            result = "✅ Low Risk: Customer is likely to stay"
+
+        # -------------------------
+        # REASONS
         # -------------------------
         reasons = []
 
         if tenure < 12:
-            reasons.append("Low tenure (new customer)")
+            reasons.append("Low tenure")
 
         if monthly > 80:
             reasons.append("High monthly charges")
 
         if contract == 0:
-            reasons.append("Month-to-month contract (no long-term commitment)")
+            reasons.append("Month-to-month contract")
 
         if internet == 1:
-            reasons.append("Fiber optic users tend to churn more")
+            reasons.append("Fiber users churn more")
 
-        if not reasons:
-            reason_text = "No major risk factors detected"
-        else:
-            reason_text = "Reasons: " + ", ".join(reasons)
+        reason_text = "Reasons: " + ", ".join(reasons) if reasons else "No major risk factors"
 
-        return render_template('index.html',
-                               prediction_text=result,
-                               reasons=reason_text)
+        # -------------------------
+        # SUGGESTIONS
+        # -------------------------
+        suggestions = []
+
+        if tenure < 12:
+            suggestions.append("Offer loyalty benefits")
+
+        if contract == 0:
+            suggestions.append("Encourage long-term plan")
+
+        if monthly > 80:
+            suggestions.append("Provide better pricing")
+
+        suggestion_text = "Suggestions: " + ", ".join(suggestions) if suggestions else "Customer looks stable"
+
+        return render_template(
+            'index.html',
+            prediction_text=result,
+            reasons=reason_text,
+            suggestions=suggestion_text
+        )
 
     except Exception as e:
         return str(e)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
