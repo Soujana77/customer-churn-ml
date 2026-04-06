@@ -58,3 +58,7 @@ Task 5 and 6
 - Mapped user inputs to correct feature names
 - Ensured model receives proper structured input
 - Improved prediction reliability
+---------------------
+- Added rule-based explanation system
+- Provided reasons for churn prediction
+- Improved interpretability of model output

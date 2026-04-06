@@ -1,28 +1,28 @@
 from flask import Flask, render_template, request
 import joblib
 import numpy as np
+import pandas as pd
 
 app = Flask(__name__)
 
-# load model and scaler
+# Load model and scaler
 model = joblib.load('model.pkl')
 scaler = joblib.load('scaler.pkl')
 
 @app.route('/')
 def home():
     return render_template('index.html')
+
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        import pandas as pd
-
         # Get input values
         tenure = float(request.form['tenure'])
         monthly = float(request.form['monthly'])
         contract = int(request.form['contract'])
         internet = int(request.form['internet'])
 
-        # Create dictionary with ALL features (default = 0)
+        # Create feature dictionary (same as training columns)
         data = {col: 0 for col in [
             'gender','SeniorCitizen','tenure','MonthlyCharges','TotalCharges',
             'Partner_Yes','Dependents_Yes','PhoneService_Yes',
@@ -39,7 +39,7 @@ def predict():
             'PaymentMethod_Electronic check','PaymentMethod_Mailed check'
         ]}
 
-        # Fill important values
+        # Fill important fields
         data['tenure'] = tenure
         data['MonthlyCharges'] = monthly
         data['TotalCharges'] = tenure * monthly  # approximation
@@ -59,10 +59,10 @@ def predict():
         # Convert to DataFrame
         df_input = pd.DataFrame([data])
 
-        # Scale
+        # Scale input
         final_features = scaler.transform(df_input)
 
-        # Predict
+        # Prediction
         prediction = model.predict(final_features)
 
         if prediction[0] == 1:
@@ -70,9 +70,34 @@ def predict():
         else:
             result = "✅ Customer is not likely to churn"
 
-        return render_template('index.html', prediction_text=result)
+        # -------------------------
+        # Rule-based explanation
+        # -------------------------
+        reasons = []
+
+        if tenure < 12:
+            reasons.append("Low tenure (new customer)")
+
+        if monthly > 80:
+            reasons.append("High monthly charges")
+
+        if contract == 0:
+            reasons.append("Month-to-month contract (no long-term commitment)")
+
+        if internet == 1:
+            reasons.append("Fiber optic users tend to churn more")
+
+        if not reasons:
+            reason_text = "No major risk factors detected"
+        else:
+            reason_text = "Reasons: " + ", ".join(reasons)
+
+        return render_template('index.html',
+                               prediction_text=result,
+                               reasons=reason_text)
 
     except Exception as e:
         return str(e)
+
 if __name__ == "__main__":
     app.run(debug=True)
