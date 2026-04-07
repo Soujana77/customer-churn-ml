@@ -2,41 +2,195 @@
 
 {% block content %}
 
-<h2>Analyze Customer</h2>
+<div class="page-header">
+    <h1 class="page-title">Customer Analysis</h1>
+    <p class="page-subtitle">Enter customer details to predict churn probability and receive actionable recommendations.</p>
+</div>
 
-<form action="/predict" method="post">
+<div class="analyze-layout">
+    <div class="card form-card">
+        <h2 class="form-title">Customer Information</h2>
+        
+        <form action="/predict" method="post">
+            <div class="form-group">
+                <label class="form-label" for="tenure">Tenure (months)</label>
+                <input type="number" class="form-input" id="tenure" name="tenure" placeholder="Enter customer tenure in months" min="0" required>
+                <p class="form-hint">Number of months the customer has been with the company</p>
+            </div>
 
-    <label>Tenure</label>
-    <input type="number" name="tenure" required>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" for="plan">Plan Type</label>
+                    <select class="form-select" id="plan" name="plan" required>
+                        <option value="" disabled selected>Select plan</option>
+                        <option value="30">Basic - $30/month</option>
+                        <option value="50">Standard - $50/month</option>
+                        <option value="80">Premium - $80/month</option>
+                        <option value="100">Ultimate - $100/month</option>
+                    </select>
+                    <p class="form-hint">Customer's monthly subscription plan</p>
+                </div>
 
-    <label>Plan</label>
-    <select name="plan">
-        <option value="30">Basic</option>
-        <option value="50">Standard</option>
-        <option value="80">Premium</option>
-        <option value="100">Ultimate</option>
-    </select>
+                <div class="form-group">
+                    <label class="form-label" for="contract">Contract Type</label>
+                    <select class="form-select" id="contract" name="contract" required>
+                        <option value="" disabled selected>Select contract</option>
+                        <option value="0">Month-to-month</option>
+                        <option value="1">One Year</option>
+                        <option value="2">Two Year</option>
+                    </select>
+                    <p class="form-hint">Contract duration commitment</p>
+                </div>
+            </div>
 
-    <label>Contract</label>
-    <select name="contract">
-        <option value="0">Month-to-month</option>
-        <option value="1">One year</option>
-        <option value="2">Two year</option>
-    </select>
+            <div class="form-group">
+                <label class="form-label" for="internet">Internet Service</label>
+                <select class="form-select" id="internet" name="internet" required>
+                    <option value="" disabled selected>Select service</option>
+                    <option value="0">DSL</option>
+                    <option value="1">Fiber Optic</option>
+                    <option value="2">No Internet Service</option>
+                </select>
+                <p class="form-hint">Type of internet connection provided</p>
+            </div>
 
-    <label>Internet</label>
-    <select name="internet">
-        <option value="0">DSL</option>
-        <option value="1">Fiber</option>
-        <option value="2">None</option>
-    </select>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-analyze">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+                    </svg>
+                    Analyze Customer
+                </button>
+            </div>
+        </form>
+    </div>
 
-    <button type="submit">Analyze</button>
+    <div class="card result-card">
+        {% if prediction_text %}
+            {% if 'High Risk' in prediction_text %}
+                <div class="result-header">
+                    <div class="result-icon high-risk">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="result-title high-risk">High Risk</h3>
+                        <p class="result-subtitle">Customer is likely to churn</p>
+                    </div>
+                </div>
 
-</form>
+                <div class="result-section">
+                    <h4 class="result-section-title">Identified Risk Factors</h4>
+                    <ul class="result-list reasons">
+                        {% if reasons_list %}
+                            {% for reason in reasons_list %}
+                                <li>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                                    </svg>
+                                    <span>{{ reason }}</span>
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                                </svg>
+                                <span>No major risk factors identified</span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
 
-<h3>{{ prediction_text }}</h3>
-<p>{{ reasons }}</p>
-<p>{{ suggestions }}</p>
+                <div class="result-section">
+                    <h4 class="result-section-title">Retention Recommendations</h4>
+                    <ul class="result-list suggestions">
+                        {% if suggestions_list %}
+                            {% for suggestion in suggestions_list %}
+                                <li>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                                    </svg>
+                                    <span>{{ suggestion }}</span>
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                                </svg>
+                                <span>Customer looks stable - maintain current service</span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% else %}
+                <div class="result-header">
+                    <div class="result-icon low-risk">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="result-title low-risk">Low Risk</h3>
+                        <p class="result-subtitle">Customer is likely to stay</p>
+                    </div>
+                </div>
+
+                <div class="result-section">
+                    <h4 class="result-section-title">Positive Factors</h4>
+                    <ul class="result-list suggestions">
+                        {% if reasons_list %}
+                            {% for reason in reasons_list %}
+                                <li>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                    <span>{{ reason }}</span>
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                                <span>No major risk factors identified</span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div class="result-section">
+                    <h4 class="result-section-title">Retention Tips</h4>
+                    <ul class="result-list suggestions">
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                            </svg>
+                            <span>Continue providing excellent service</span>
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                            </svg>
+                            <span>Consider offering loyalty rewards</span>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="no-result">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+                </svg>
+                <h3>Ready to Analyze</h3>
+                <p>Enter customer information in the form to get churn prediction and retention recommendations.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %}

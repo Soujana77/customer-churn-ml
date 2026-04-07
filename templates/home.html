@@ -2,12 +2,57 @@
 
 {% block content %}
 
-<h1>Customer Churn Analysis System</h1>
+<div class="page-header">
+    <h1 class="page-title">Customer Churn Analysis System</h1>
+    <p class="page-subtitle">Empower your sales and retention team with predictive analytics to identify at-risk customers and take proactive measures to improve customer retention.</p>
+</div>
 
-<p>This system helps telecom companies identify customers likely to leave.</p>
+<div class="hero-actions">
+    <a href="/analyze" class="btn btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+            <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+        </svg>
+        Analyze Customer
+    </a>
+    <a href="/dashboard" class="btn btn-secondary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+            <rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/>
+        </svg>
+        View Dashboard
+    </a>
+</div>
 
-<a href="/analyze">
-    <button>Analyze Customer</button>
-</a>
+<div class="hero-grid">
+    <div class="card feature-card animate-delay-1">
+        <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+        </div>
+        <h3 class="feature-title">Predictive Analysis</h3>
+        <p class="feature-description">Our ML-powered model analyzes customer behavior patterns to predict churn likelihood with high accuracy.</p>
+    </div>
+
+    <div class="card feature-card animate-delay-2">
+        <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M9 12l2 2 4-4"/>
+            </svg>
+        </div>
+        <h3 class="feature-title">Risk Identification</h3>
+        <p class="feature-description">Quickly identify high-risk customers and understand the key factors contributing to their churn probability.</p>
+    </div>
+
+    <div class="card feature-card animate-delay-3">
+        <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </svg>
+        </div>
+        <h3 class="feature-title">Actionable Insights</h3>
+        <p class="feature-description">Get personalized retention recommendations to help you take the right actions at the right time.</p>
+    </div>
+</div>
 
 {% endblock %}

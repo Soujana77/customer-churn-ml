@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1 class="page-title">Dashboard</h1>
+    <p class="page-subtitle">Overview of customer churn metrics and risk analysis for the retention team.</p>
+</div>
+
+<div class="dashboard-grid">
+    <div class="card stat-card animate-delay-1">
+        <div class="stat-icon risk">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+        </div>
+        <div class="stat-content">
+            <p class="stat-label">High-Risk Customers</p>
+            <p class="stat-value">247</p>
+            <p class="stat-change negative">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                +12% from last month
+            </p>
+        </div>
+    </div>
+
+    <div class="card stat-card animate-delay-2">
+        <div class="stat-icon safe">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+        </div>
+        <div class="stat-content">
+            <p class="stat-label">Low-Risk Customers</p>
+            <p class="stat-value">1,853</p>
+            <p class="stat-change positive">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="20 6 9 17 4 12"/></svg>
+                +5% from last month
+            </p>
+        </div>
+    </div>
+
+    <div class="card stat-card animate-delay-3">
+        <div class="stat-icon" style="background: var(--soft-blue);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--muted-blue);">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+        </div>
+        <div class="stat-content">
+            <p class="stat-label">Total Customers</p>
+            <p class="stat-value">2,100</p>
+            <p class="stat-change positive">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="20 6 9 17 4 12"/></svg>
+                +3% from last month
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="card chart-card animate-delay-4">
+    <div class="card-header">Churn Trend Analysis</div>
+    <div class="chart-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+        </svg>
+        <p>Chart visualization will be integrated here</p>
+    </div>
+</div>
+
+{% endblock %}
