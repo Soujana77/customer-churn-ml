@@ -62,3 +62,13 @@ Task 5 and 6
 - Added rule-based explanation system
 - Provided reasons for churn prediction
 - Improved interpretability of model output
+---------------------
+07/04/2026
+- Converted single-page app into multi-page Flask application
+- Added Home, Dashboard, and Customer Analysis pages
+- Implemented navigation using base template
+- Integrated ML model into analysis page
+- Fixed feature mapping for accurate predictions
+- Improved UI using CSS (clean layout, structured inputs)
+- Added subscription plan selection instead of manual input
+- Added churn prediction with reasons and suggestions
