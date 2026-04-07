@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Analyze Customer</h2>
+
+<form action="/predict" method="post">
+
+    <label>Tenure</label>
+    <input type="number" name="tenure" required>
+
+    <label>Plan</label>
+    <select name="plan">
+        <option value="30">Basic</option>
+        <option value="50">Standard</option>
+        <option value="80">Premium</option>
+        <option value="100">Ultimate</option>
+    </select>
+
+    <label>Contract</label>
+    <select name="contract">
+        <option value="0">Month-to-month</option>
+        <option value="1">One year</option>
+        <option value="2">Two year</option>
+    </select>
+
+    <label>Internet</label>
+    <select name="internet">
+        <option value="0">DSL</option>
+        <option value="1">Fiber</option>
+        <option value="2">None</option>
+    </select>
+
+    <button type="submit">Analyze</button>
+
+</form>
+
+<h3>{{ prediction_text }}</h3>
+<p>{{ reasons }}</p>
+<p>{{ suggestions }}</p>
+
+{% endblock %}

@@ -10,11 +10,6 @@ model = joblib.load('model.pkl')
 scaler = joblib.load('scaler.pkl')
 
 
-@app.route('/')
-def home():
-    return render_template('index.html')
-
-
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
@@ -131,6 +126,17 @@ def predict():
     except Exception as e:
         return str(e)
 
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
+@app.route('/analyze')
+def analyze():
+    return render_template('analyze.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
